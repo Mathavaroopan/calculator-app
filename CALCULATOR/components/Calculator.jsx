@@ -13,7 +13,10 @@ const Calculator = () => {
       setInput((prevInput) => prevInput.slice(0, -1));
     } else if (value === '=') {
       try {
-        const calculationResult = eval(input).toString();
+        let calculationResult = eval(input).toString();
+        if (calculationResult.split('.')[1].length > 4) {
+          calculationResult = parseFloat(calculationResult).toFixed(4).toString();
+        }
         setResult(calculationResult);
 
         const response = await fetch('http://10.17.10.31:6000/add-calculation', {
@@ -127,7 +130,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#05132B',
-    justifyContent: 'flex-start', // Changed to flex-start to allow space for the button
+    justifyContent: 'flex-start',
     position: 'relative',
   },
   upper: {

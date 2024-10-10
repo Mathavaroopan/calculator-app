@@ -40,5 +40,20 @@ app.get('/history', async (req, res) => {
   }
 });
 
+app.delete('/delete-history', async (req, res) => {
+  try {
+    const result = await Calculation.deleteMany({});
+
+    if (result.deletedCount > 0) {
+      res.status(200).json({ message: 'History deleted successfully' });
+    } else {
+      res.status(200).json({ message: 'No history to delete' });
+    }
+  } catch (error) {
+    console.error('Error deleting history:', error);
+    res.status(500).json({ message: 'Server error, unable to delete history' });
+  }
+});
+
 const PORT = 6000;
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 
-const History = () => {
-  const [history, setHistory] = useState([]);
-  const [msg, setMsg] = useState("Loading...")
-  useEffect(() => {
-    const fetchHistory = async () => {
-      try {
-        const response = await fetch('http://10.17.10.31:6000/history');
-        const data = await response.json();
-        setHistory(data);
-        if(history.length == 0) setMsg("No History");
-      } catch (err) {
-        console.error('Failed to fetch history', err);
-      }
-    };
-    fetchHistory();
-  }, []);
-
+const History = ({ historyChanged }) => {
+    const [history, setHistory] = useState([]);
+    const [msg, setMsg] = useState("Loading...")
+  
+    useEffect(() => {
+      const fetchHistory = async () => {
+        try {
+          const response = await fetch('http://10.17.10.31:6000/history');
+          const data = await response.json();
+          setHistory(data);
+          if(data.length == 0) setMsg("No History")
+        } catch (err) {
+          console.error('Failed to fetch history', err);
+        }
+      };
+  
+      fetchHistory();
+    }, [historyChanged]);
+  
   return (
     <ScrollView style={styles.container}>
       {history.length > 0 ? (
