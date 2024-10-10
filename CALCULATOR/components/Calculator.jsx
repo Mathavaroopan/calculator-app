@@ -14,7 +14,7 @@ const Calculator = () => {
     } else if (value === '=') {
       try {
         let calculationResult = eval(input).toString();
-        if (calculationResult.split('.')[1].length > 4) {
+        if (calculationResult.includes('.') && calculationResult.split('.')[1].length > 4) {
           calculationResult = parseFloat(calculationResult).toFixed(4).toString();
         }
         setResult(calculationResult);
