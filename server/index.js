@@ -32,13 +32,14 @@ app.post('/add-calculation', async (req, res) => {
 
 app.get('/history', async (req, res) => {
   try {
-    const calculations = await Calculation.find().sort({ datetime: -1 });
+    const calculations = await Calculation.find().sort({ datetime: -1 }).limit(10);
     res.json(calculations);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
   }
 });
+
 
 app.delete('/delete-history', async (req, res) => {
   try {
